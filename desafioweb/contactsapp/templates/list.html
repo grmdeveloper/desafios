@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact List</title>
+</head>
+<body>
+
+<a href="/" style="display:block; margin:50px; padding:10px">Voltar</a>
+    <nav style="margin:10px auto; width:80%; text-align:center ">
+            <form id="filter" method="post"> {% csrf_token %}
+                <label>Número de linhas</label>
+
+                <select name="limit" id="limit">
+                    <option>10</option>
+                    <option>20</option>
+                    <option>50</option>
+                    <option>100</option>
+                </select>
+                <input type="submit" value="Filtrar">
+                <br><br>
+                <label>Página</label>
+
+            </form>
+            <form id="page" method="post"> {% csrf_token %}
+                {% for page in page_number %}
+                    <input type="number" value="{{limit}}" hidden>
+                    <input type="submit" name="page" value="{{page}}">
+                {% endfor %}
+            </form>
+        </nav>
+
+    <table>
+
+        <tr>
+            <th>Nome</th>
+            <th>Canal</th>
+            <th>Valor</th>
+            <th>Descrição</th>
+            <th>Opções</th>
+        </tr>
+        {% for contact in list %}
+        <tr>
+            <td>{{contact.name}}</td>
+            <td>{{contact.channel}}</td>
+            <td>{{contact.value}}</td>
+            <td>{{contact.description}}</td>
+            <td>
+                <a href="/ad/contactsapp/contact/{{contact.id}}/change/">editar</a>
+                <a href="delete/{{contact.id}}">excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <style>
+        table{
+            margin:auto;
+        }
+        th, td{
+            padding:5px;
+            border:1px solid gray;
+        }
+    </style>
+
+    <script>
+
+    </script>
+</body>
+</html>
